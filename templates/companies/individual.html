@@ -1,0 +1,103 @@
+{# ------------------------------------------------------- #}
+{# INDIVIDUAL VIEW FOR EACH companies #}
+{# This page can use any data from http:localhost:2000/cms/#/form/companies/ #}
+{# Webhook uses the SWIG.js (like Djagno/Twig) templating system. Their documentation is here: #}
+{# http://paularmstrong.github.io/swig/docs/tags/ #}
+{# Learn about calling data into Webhook pages here: #}
+{# http://www.webhook.com/docs/template-rules-and-filters/ #}
+{# ------------------------------------------------------- #}
+{# Confused what extends and blocks do? Watch a primer: #}
+{# http://www.webhook.com/help/template-inheritance/ #}
+{% extends "templates/partials/base.html" %}
+{# This sets our page <title>. It will append this companies's name to the site title defined in base.html #}
+{% block title %}{% parent %} - {{ item.name }}{% endblock %}
+{% block content %}
+  <p><a href="/companies/">View a list of all companies</a></p>
+  <h1>{{ item.name }}</h1>
+  <ul>
+      <li>
+        <strong>Name: </strong>
+        {{ item.name }}
+      </li>
+      <li>
+        <strong>Description: </strong>
+        {{ item.description }}
+      </li>
+      <li>
+        <strong>Create Date: </strong>
+        {# Format the date. You can use PHP's date function to format as needed. http://php.net/manual/en/function.date.php #}
+        {{ item.create_date|date('F d Y') }}
+      </li>
+      <li>
+        <strong>Last Updated: </strong>
+        {# Format the date. You can use PHP's date function to format as needed. http://php.net/manual/en/function.date.php #}
+        {{ item.last_updated|date('F d Y') }}
+      </li>
+      <li>
+        <strong>Publish Date: </strong>
+        {# Format the date. You can use PHP's date function to format as needed. http://php.net/manual/en/function.date.php #}
+        {{ item.publish_date|date('F d Y') }}
+      </li>
+      <li>
+        <strong>Website: </strong>
+        {{ item.website }}
+      </li>
+      <li>
+        <strong>Industry: </strong>
+        {{ item.industry }}
+      </li>
+      <li>
+        <strong>Location: </strong>
+        {{ item.location }}
+      </li>
+      <li>
+        <strong>First meeting: </strong>
+        {# Format the date. You can use PHP's date function to format as needed. http://php.net/manual/en/function.date.php #}
+        {{ item.first_meeting|date('F d Y') }}
+      </li>
+      <li>
+        <strong>Team: </strong>
+        {{ item.team }}
+      </li>
+      <li>
+        <strong>Outside source: </strong>
+        {{ item.outside_source }}
+      </li>
+      <li>
+        <strong>Stage: </strong>
+        {{ item.stage }}
+      </li>
+      <li>
+        <strong>How far did they get?: </strong>
+        {{ item.how_far_did_they_get }}
+      </li>
+      <li>
+        <strong>Is this deal still in the pipeline?: </strong>
+        {{ item.is_this_deal_still_in_the_pipeline }}
+      </li>
+      <li>
+        <strong>Previous Investors: </strong>
+        {{ item.previous_investors }}
+      </li>
+      <li>
+        <strong>Current Investors: </strong>
+        {{ item.current_investors }}
+      </li>
+      <li>
+        <strong>Amount raised: </strong>
+        {{ item.amount_raised }}
+      </li>
+      <li>
+        <strong>Target Terms: </strong>
+        {{ item.target_terms }}
+      </li>
+      <li>
+        <strong>Preview URL: </strong>
+        {{ item.preview_url }}
+      </li>
+      <li>
+        <strong>Crunchbase URL: </strong>
+        {{ item.crunchbase_url }}
+      </li>
+  </ul>
+{% endblock %}

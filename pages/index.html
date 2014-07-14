@@ -1,0 +1,101 @@
+{# YOUR HOMEPAGE #}
+
+{# First time seeing extend or blocks? Want to know how it works? Tutorial here: http://www.webhook.com #}
+{% extends "templates/partials/base.html" %}
+
+{% block content %}
+<header>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Lightbank CRM</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Project name</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="">Home</a></li>
+          <li><a href="/cms/#/wh/content/companies/new">Add</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</header>
+
+<h1>Hello <a href="http://getbootstrap.com/">Bootstrap</a></h1>
+
+  <p><a class="btn btn-primary" href="/cms/">Looking for the CMS?</a></p>
+
+  <!--
+  {# Grabs the data to list all the content types (set as multiple) from the CMS. #}
+  {% set types = getTypes() %}
+
+  {# If you have at least content page type, we show a list. #}
+  {% if types|size !== 0 %}
+
+    <h3>Content types you've created in the CMS so far.</h3>
+
+    <ul>
+    {% for type in types %}
+      <li><a href="{{ url(type) }}">{{ type.name }}</a></li>
+    {% endfor %}
+    </ul>
+
+  {% endif %}
+  -->
+
+  {# The first thing we do is call companies data from the CMS. #}
+  {% set data = get('companies') %}
+
+  {# Next we sort the data by publish_date. The true bit reverses it so it's newest first. Learn more: #}
+  {# http://www.webhook.com/docs/template-rules-and-filters/#sortproperty_reverseorder #}
+  {% set data = data|sort('publish_date', true) %}
+
+  {# This is how you set pagination. It's always important to do this after your sort. #}
+  {% set data = paginate(data, 10) %}
+
+  <h1>List of companies</h1>
+
+  {# This forloop can use any data from http:localhost:2000/cms/#/form/companies/ #}
+  <div class="table-responsive">
+  <table class="table company-list">
+    <tr>
+      <th>Company</th>
+      <th>Website</th> 
+      <th>Description</th>
+      <th>Fundraising Stage</th>
+      <th>Team</th>
+      <th>Pipeline Stage</th>
+      <th>Amount Raised</th>
+      <th>More Info</th>
+    </tr>
+    {% for object in data %}
+      <a class="link" href="{{ url(object) }}">
+        <tr class='clickableRow' href='/companies/{{ object.name }}'>
+            <td class="name">{{ object.name }}</td>
+            <td class="website"><a target="_blank" href="{{ object.website }}">{{ object.website }}</a></td>
+            <td class="description">{{ object.description }}</td>
+            <td class="stage">{{ object.stage }}</td>
+            <td class="team">{{ object.team }}</td>
+            <td class="pipeline">{{ object.how_far_did_they_get }}</td>
+            <td class="amount-raised">{{ object.amount-raised }}</td>
+            <td class="more-info"><a href="/companies/{{ object.name }}" class="btn btn-primary">More Info</a></td>
+        </tr>
+      </a>
+    {% endfor %}
+  </table>
+  </div>
+
+  {# The actual pagination template, feel free to edit or replace the default one. #}
+  {% include "templates/partials/paginator.html" %}
+
+
+
+{% endblock %}
+
+

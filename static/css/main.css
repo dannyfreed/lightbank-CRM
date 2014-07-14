@@ -1,0 +1,13 @@
+body {
+  padding: 40px;
+}
+.company-list{
+	list-style: none;
+}
+.description{
+	width:400px !important;
+}
+tr:hover{
+	background: #f0f0f0;
+	cursor: pointer;
+}
